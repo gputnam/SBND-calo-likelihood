@@ -153,9 +153,14 @@ class caloLikelihood(object):
         array = self.array
         pdg_mask = (np.abs(array[self.pdgcode_var]) == pdg_code)
         mask = (self.quality_mask & self.quality_masks_planes[plane_num] & pdg_mask)
+        print(mask)
+        print(len(mask))
+        print(len([x for x in mask if x.any()]))
 
         self.lookup_tables[pdg_code][plane_num] = self.buildLookUpTable(
             array, mask, plane_num, cali)
+        print(self.lookup_tables[pdg_code][plane_num])
+        print(len([x for x in self.lookup_tables[pdg_code][plane_num] if x > 0]))
 
     def buildLookUpTableData(self,
                              plane_num,
@@ -740,7 +745,7 @@ class caloLikelihood(object):
             plt.ylim([0.0, 1.05])
             plt.xlabel('False Positive Rate')
             plt.ylabel('True Positive Rate')
-            plt.legend(loc="lower right")
+            plt.legend(loc="lower right",  prop={'size': 6})
             plt.title('MicroBooNE In Progress', loc='right')
         return roc_auc
 

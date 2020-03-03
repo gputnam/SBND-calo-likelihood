@@ -1,9 +1,13 @@
 import numpy as np
 import awkward
 
-detector_x = [-1.55, 254.8]
-detector_y = [-115.53, 117.47]
-detector_z = [0.1, 1036.9]
+#detector_x = [-1.55, 254.8]
+#detector_y = [-115.53, 117.47]
+#detector_z = [0.1, 1036.9]
+
+detector_x = [-199.15, 199.15]
+detector_y = [-200., 200.]
+detector_z = [0, 500.]
 
 def n_primary_pfps(array, var='pfp_generation_v', primary_value=2):
     array['is_primary'] = (array[var] == primary_value)
@@ -136,7 +140,7 @@ def fast_scintillation_final_state(array):
     array['end_scintillation'] = (array['backtracked_end_process'].regular() == b'FastScintillation')
 
 def non_inelastic_final_state(array):
-    array['non_inelastic'] = (array['backtracked_end_process'].regular() != b'ProtonInelastic')
+    array['non_inelastic'] = array['backtracked_process_is_stopping']
 
 def first_last_hit_mask(array):
     for plane in ['_u', '_v', '_y']:
